@@ -1,0 +1,105 @@
+project:
+  name: nike-global-analysis
+  version: "1.0.0"
+  description: "Nike global product catalog analysis across 46 countries"
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  external_dir: data/external
+  global_file: Global_Nike.csv
+  snapshot_date: "2026-03-19"
+  countries:
+    - AT
+    - AU
+    - BE
+    - BG
+    - CA
+    - CH
+    - CN
+    - CZ
+    - DE
+    - DK
+    - EG
+    - ES
+    - FI
+    - FR
+    - GB
+    - GR
+    - HR
+    - HU
+    - ID
+    - IE
+    - IL
+    - IN
+    - IT
+    - JP
+    - KR
+    - LU
+    - MX
+    - MY
+    - NL
+    - "NO"
+    - NZ
+    - PH
+    - PL
+    - PT
+    - RO
+    - SE
+    - SG
+    - SI
+    - SK
+    - TH
+    - TR
+    - TW
+    - US
+    - VN
+    - ZA
+
+columns:
+  id_cols:
+    - product_id
+    - sku
+    - model_number
+    - style_color
+  numeric_cols:
+    - price_local
+    - sale_price_local
+    - discount_pct
+    - size_count
+    - available_size_count
+  categorical_cols:
+    - country_code
+    - currency
+    - gender_segment
+    - category
+    - subcategory
+    - availability_level
+    - sport_tags
+  bool_cols:
+    - in_stock
+    - available
+
+analysis:
+  availability_levels:
+    - OOS
+    - LOW
+    - MED
+    - HIGH
+  categories:
+    - FOOTWEAR
+    - APPAREL
+    - EQUIPMENT
+  gender_segments:
+    - MENS
+    - WOMENS
+    - BOYS
+    - GIRLS
+    - UNISEX
+    - KIDS
+
+reports:
+  figures_dir: reports/figures
+  outputs_dir: reports/outputs
+  dpi: 150
+  figure_size: [12, 6]
