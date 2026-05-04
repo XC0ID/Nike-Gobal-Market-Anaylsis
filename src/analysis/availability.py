@@ -9,9 +9,11 @@ import pandas as pd
 
 def oos_rate_by_country(df: pd.DataFrame) -> pd.DataFrame:
     """Out-of-stock rate per country (% of SKUs with availability_level == OOS)."""
-    grp = df.groupby("country_code")
+    grp = df.groupby("country_code", group_keys=False)
     total = grp["sku"].count().rename("total_skus")
-    oos = grp.apply(lambda x: (x["availability_level"] == "OOS").sum()).rename("oos_skus")
+    oos = grp[["availability_level"]].apply(
+        lambda x: (x["availability_level"] == "OOS").sum(), include_groups=False
+    ).rename("oos_skus")
     result = pd.concat([total, oos], axis=1)
     result["oos_rate_pct"] = (result["oos_skus"] / result["total_skus"] * 100).round(2)
     return result.sort_values("oos_rate_pct", ascending=False).reset_index()
