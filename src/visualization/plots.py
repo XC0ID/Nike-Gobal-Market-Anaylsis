@@ -44,10 +44,20 @@ def category_pie(df: pd.DataFrame, country: str = None,
 
 def discount_heatmap(discount_df: pd.DataFrame, save_path: str = None) -> plt.Figure:
     """Heatmap of avg discount % across countries."""
-    pivot = discount_df[["avg_discount"]].T
     fig, ax = plt.subplots(figsize=(16, 3))
-    sns.heatmap(pivot, ax=ax, cmap="YlOrRd", annot=True, fmt=".1f", linewidths=0.5)
-    ax.set_title("Average Discount % by Country")
+    
+    # Handle empty dataframe case
+    if discount_df.empty or len(discount_df) == 0:
+        ax.text(0.5, 0.5, 'No discount data available', ha='center', va='center',
+                transform=ax.transAxes, fontsize=12)
+        ax.set_title("Average Discount % by Country")
+        ax.set_xticks([])
+        ax.set_yticks([])
+    else:
+        pivot = discount_df[["avg_discount"]].T
+        sns.heatmap(pivot, ax=ax, cmap="YlOrRd", annot=True, fmt=".1f", linewidths=0.5)
+        ax.set_title("Average Discount % by Country")
+    
     plt.tight_layout()
     if save_path:
         fig.savefig(save_path, dpi=150)
